@@ -20,7 +20,7 @@ const PropsArray = [
 
 function Navbar() {
   return (
-    <div className="w-[15rem] h-screen bg-[#2b444e] rounded-r-[5rem] z-20 border-r-2 border-white/40 flex flex-col justify-around items-center">
+    <div className="w-screen h-[4rem] md:w-[15rem] md:h-screen bg-[#2b444e] rounded-r-[5rem] z-20 border-r-2 border-white/40 flex flex-col justify-around items-center">
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-white text-[1.8rem] font-semibold">MoneyFy</h1>
       </div>

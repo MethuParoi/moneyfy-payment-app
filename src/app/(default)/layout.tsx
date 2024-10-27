@@ -1,5 +1,8 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../globals.css";
 import Navbar from "@/components/navbar/Navbar";
+import { StoreProvider } from "../../store/StoreProvider";
 
 export default function RootLayout({
   children,
@@ -7,12 +10,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-      <div className="min-w-screen min-h-screen flex">
-        <Navbar />
-        {children}
+    <StoreProvider>
+      <div>
+        <div className="min-w-screen min-h-screen flex">
+          <Navbar />
+          {children}
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </div>
       </div>
-    </div>
+    </StoreProvider>
   );
 }
 

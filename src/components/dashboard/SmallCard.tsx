@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import * as BiIcons from "react-icons/bi";
 import * as GiIcons from "react-icons/gi";
+import { toast } from "react-toastify";
 
 interface SmallCardProps {
   label: string;
@@ -17,6 +20,7 @@ function SmallCard({ label, icon, color }: SmallCardProps) {
     <div
       className="w-[15rem] h-[12rem] rounded-[3rem] shadow-lg flex justify-center items-center"
       style={{ backgroundColor: color }}
+      onClick={() => toast.success(`${label} clicked`)}
     >
       <div className="p-[1rem]">
         {IconComponent && (
