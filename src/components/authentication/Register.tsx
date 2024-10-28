@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
-// import { useRegisterMutation } from "../../redux/features/user/userApi";
+import { useRegisterMutation } from "../../store/features/user/userApi";
 // import Loading from "../../components/ui/Loading";
 // import { toast } from "sonner";
 
@@ -16,26 +16,26 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [password, setPassword] = useState("");
-  //   const [register, { isLoading }] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const registerData = {
-    //   username,
-    //   email,
-    //   firstName,
-    //   lastName,
-    //   password,
-    //   photoUrl,
-    // };
-    // const response = await register(registerData).unwrap();
+    const registerData = {
+      username,
+      email,
+      firstName,
+      lastName,
+      password,
+      photoUrl,
+    };
+    const response = await register(registerData).unwrap();
 
-    // if (response?.success) {
-    //   toast.success(response?.message);
-    //   router.push("/login");
-    // }
+    if (response?.success) {
+      toast.success(response?.message);
+      router.push("/login");
+    }
   };
 
   return (
@@ -64,7 +64,7 @@ const Register = () => {
                     type="text"
                     name="username"
                     id="username"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 sm:h-[4rem]"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-2xl  sm:leading-6 sm:h-[4rem]"
                     placeholder="eg. janesmith"
                   />
                 </div>
@@ -84,7 +84,7 @@ const Register = () => {
                     type="email"
                     name="email"
                     id="email"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 sm:h-[4rem]"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-2xl  sm:leading-6 sm:h-[4rem]"
                     placeholder="eg. janesmith@gmail.com"
                   />
                 </div>
@@ -104,7 +104,7 @@ const Register = () => {
                     type="text"
                     name="firstName"
                     id="firstName"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 sm:h-[4rem]"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-2xl  sm:leading-6 sm:h-[4rem]"
                     placeholder="eg. Jane"
                   />
                 </div>
@@ -124,7 +124,7 @@ const Register = () => {
                     type="text"
                     name="lastName"
                     id="lastName"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 sm:h-[4rem]"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-2xl  sm:leading-6 sm:h-[4rem]"
                     placeholder="eg. Smith"
                   />
                 </div>
@@ -144,7 +144,7 @@ const Register = () => {
                     type="text"
                     name="photoUrl"
                     id="photoUrl"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-lg sm:leading-6 sm:h-[4rem]"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-2xl sm:leading-6 sm:h-[4rem]"
                     placeholder="eg. www.janesmith.com"
                   />
                 </div>
@@ -164,7 +164,7 @@ const Register = () => {
                     type="password"
                     name="password"
                     id="password"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900  focus:ring-0 sm:text-lg sm:leading-6 sm:h-[4rem]"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900  focus:ring-0 sm:text-2xl sm:leading-6 sm:h-[4rem]"
                     placeholder="********"
                   />
                 </div>
@@ -184,10 +184,10 @@ const Register = () => {
             <p>Already registered?</p>
             <button
               type="button"
-              onClick={() => router.push("/Login")}
+              onClick={() => router.push("/signin")}
               className="flex rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
-              Login
+              Sign In
             </button>
           </div>
         </div>

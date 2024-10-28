@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:4000",
+  baseUrl: "https://moneyfy-server.vercel.app/",
   // prepareHeaders: (headers, { getState }) => {
   //   const { userToken: token } = getState().user;
 
