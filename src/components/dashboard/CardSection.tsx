@@ -6,6 +6,8 @@ import SmallCard from "./SmallCard";
 import Users from "./Users";
 import { IoCopyOutline } from "react-icons/io5";
 
+const accountNumber = localStorage.getItem("accountNumber");
+
 const smallCardPropsArray = [
   { label: "Withdraw", icon: "BiMoneyWithdraw", color: "#f67a3b" },
   { label: "Deposit", icon: "GiReceiveMoney", color: "#17a19e" },
@@ -19,8 +21,11 @@ function CardSection() {
         <h1 className="text-[3rem] font-semibold text-gray-700">MoneyFy</h1>
         <p className="text-gray-600">Connect all your cards</p>
       </div>
-      <div className="my-[3rem]">
+      <div className="my-[3rem] relative">
         <Image height={400} width={400} src={Card} alt="" />
+        <h2 className="absolute bottom-[4.8rem] left-[10rem] text-[2.2rem] tracking-widest">
+          {accountNumber}
+        </h2>
       </div>
       {/* small card section */}
       <div className="flex gap-x-12 mt-[1rem]">

@@ -1,8 +1,10 @@
 "use client";
 
+import { setIcon, setLabel, showModal } from "@/store/features/ui/uiSlice";
 import React from "react";
 import * as BiIcons from "react-icons/bi";
 import * as GiIcons from "react-icons/gi";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 interface SmallCardProps {
@@ -12,15 +14,21 @@ interface SmallCardProps {
 }
 
 function SmallCard({ label, icon, color }: SmallCardProps) {
+  const dispatch = useDispatch();
+
   const IconComponent =
     BiIcons[icon as keyof typeof BiIcons] ||
     GiIcons[icon as keyof typeof GiIcons];
 
   return (
     <div
-      className="w-[15rem] h-[12rem] rounded-[3rem] shadow-lg flex justify-center items-center"
+      className="w-[15rem] h-[12rem] rounded-[3rem] shadow-lg flex justify-center items-center cursor-pointer"
       style={{ backgroundColor: color }}
-      onClick={() => toast.success(`${label} clicked`)}
+      onClick={() => {
+        dispatch(showModal(true));
+        dispatch(setLabel(label));
+        dispatch(setIcon(icon));
+      }}
     >
       <div className="p-[1rem]">
         {IconComponent && (
@@ -33,3 +41,5 @@ function SmallCard({ label, icon, color }: SmallCardProps) {
 }
 
 export default SmallCard;
+
+
