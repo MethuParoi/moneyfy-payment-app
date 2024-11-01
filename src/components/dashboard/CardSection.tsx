@@ -9,9 +9,9 @@ import { IoCopyOutline } from "react-icons/io5";
 const accountNumber = localStorage.getItem("accountNumber");
 
 const smallCardPropsArray = [
-  { label: "Withdraw", icon: "BiMoneyWithdraw", color: "#f67a3b" },
-  { label: "Deposit", icon: "GiReceiveMoney", color: "#17a19e" },
-  { label: "Transfer", icon: "BiTransfer", color: "#b97fe3" },
+  { label: "Add Money", icon: "BiMoneyWithdraw", color: "#f67a3b" },
+  { label: "Send Money", icon: "BiTransfer", color: "#b97fe3" },
+  // { label: "Request Loan", icon: "GiReceiveMoney", color: "#17a19e" },
 ];
 
 function CardSection() {

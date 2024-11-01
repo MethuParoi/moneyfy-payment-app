@@ -3,7 +3,11 @@ import { GiReceiveMoney } from "react-icons/gi";
 import { BiMoneyWithdraw, BiTransfer } from "react-icons/bi";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useMakeTransactionMutation } from "../../store/features/transaction/transactionApi";
+import {
+  useAddMoneyMutation,
+  useMakeTransactionMutation,
+  useSendMoneyMutation,
+} from "../../store/features/transaction/transactionApi";
 import { toast } from "react-toastify";
 // import { toast } from "sonner";
 // import AuthModal from "../../../components/ui/AuthModal/AuthModal";
@@ -20,12 +24,13 @@ const iconMapping = {
   BiTransfer: BiTransfer,
 };
 
-export const Modal = ({ modalHandler, heading, logo }) => {
+export const Modal = ({ modalHandler, heading, logo, handleBalance }) => {
   const [amount, setAmount] = useState("");
   const [transUser, setTransUser] = useState("");
   const { userData } = useSelector((state) => state.user);
   //   const { username } = userData;
-  const [makeTransaction] = useMakeTransactionMutation();
+  const [sendMoney] = useSendMoneyMutation();
+  const [addMoney] = useAddMoneyMutation();
   const dispatch = useDispatch();
 
   const receiverNotNeededTransactions = ["Add Money", "Request Loan"];
@@ -37,33 +42,42 @@ export const Modal = ({ modalHandler, heading, logo }) => {
     if (transactionType === "add-money") {
       transObj = {
         amount: Number(amount),
-        transactionType,
-        receiver: username,
-        transactionMadeBy: username,
+        // transactionType,
+        // receiver: username,
+        // transactionMadeBy: username,
       };
+      const addMoneyResult = await addMoney(transObj).unwrap();
+      if (addMoneyResult?.success) {
+        toast.success(addMoneyResult.message);
+        handleBalance();
+        modalHandler();
+      } else {
+        toast.error("Transaction failed");
+      }
     } else {
       transObj = {
         amount: Number(amount),
         transactionType,
-        sender: username,
-        receiver: transUser,
-        transactionMadeBy: username,
+        receiver: Number(transUser),
+        // sender: username,
+        // transactionMadeBy: username,
       };
     }
-    const loading = toast.loading("Transaction processing...");
-    const transactionResult = await makeTransaction(transObj).unwrap();
+    // const loading = toast.loading("Transaction processing...");
+    const transactionResult = await sendMoney(transObj).unwrap();
     if (transactionResult?.success) {
-      toast.success(transactionResult.message, { id: loading });
+      toast.success(transactionResult.message);
       modalHandler();
     } else {
       toast.error("Transaction failed", { id: loading });
     }
   };
 
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     dispatch(takeUserPhotoToggle());
-  //   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //   dispatch(takeUserPhotoToggle());
+    await handleTransaction();
+  };
 
   const IconComponent = iconMapping[logo];
 
@@ -85,21 +99,11 @@ export const Modal = ({ modalHandler, heading, logo }) => {
               <div>
                 <button className=" ">
                   {IconComponent && <IconComponent size={"4rem"} />}
-                  {/* {logo === 1 ? (
-                    <GiReceiveMoney size={"4rem"} />
-                  ) : logo === 2 ? (
-                    <GiTakeMyMoney size={"4rem"} />
-                  ) : logo === 3 ? (
-                    <FaMoneyBill1Wave size={"4rem"} />
-                  ) : (
-                    <FaMoneyBillTrendUp size={"4rem"} />
-                  )} */}
                 </button>
               </div>
             </div>
 
-            <form>
-              {/* onSubmit={handleSubmit} */}
+            <form onSubmit={handleSubmit}>
               <div className="pt-5">
                 <input
                   type="text"
@@ -112,7 +116,7 @@ export const Modal = ({ modalHandler, heading, logo }) => {
               {!receiverNotNeededTransactions.includes(heading) && (
                 <div className="pt-5">
                   <input
-                    type="text"
+                    type="number"
                     value={transUser}
                     onChange={(e) => setTransUser(e.target.value)}
                     placeholder="Enter receiver userid"

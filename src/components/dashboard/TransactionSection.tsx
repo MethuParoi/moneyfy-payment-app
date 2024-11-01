@@ -1,8 +1,13 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import TransactionRows from "./TransactionRows";
 
 import { Chart } from "./Chart";
+import { BiDollar } from "react-icons/bi";
+import { useCheckBalanceMutation } from "@/store/features/transaction/transactionApi";
+import { toast } from "react-toastify";
 
 const transactionRows = [
   {
@@ -43,7 +48,25 @@ const transactionRows = [
   },
 ];
 
-function TransactionSection() {
+function TransactionSection({ balance }) {
+  // const [balance, setBalance] = useState(0);
+  // const [checkBalance] = useCheckBalanceMutation();
+
+  // const handleBalance = async () => {
+  //   const token = localStorage.getItem("token");
+  //   const checkBalanceResult = await checkBalance({ token }).unwrap();
+  //   if (checkBalanceResult?.success) {
+  //     setBalance(checkBalanceResult.result.balance);
+  //     toast.success(checkBalanceResult.message);
+  //   } else {
+  //     toast.error("Transaction failed");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   handleBalance();
+  // }, []);
+
   return (
     <div className="ml-[2rem]">
       <div className="flex items-center justify-between  mr-[4rem] mt-[4rem]">
@@ -54,9 +77,12 @@ function TransactionSection() {
           <p className="text-gray-600">Current transfers</p>
         </div>
         <div>
-          <button className="border-2 border-gray-400 text-white px-5 py-5 rounded-[50%] ml-5">
-            <LuSearch className="text-gray-600 text-[3.5rem] " />
-          </button>
+          <div className="border-2 border-gray-300  px-5 py-5 rounded-xl ml-5 flex items-center justify-around text-gray-200 font-semibold">
+            <div>
+              <BiDollar className="text-[2.5rem]" />
+            </div>
+            <p className="text-[2rem]">{balance}</p>
+          </div>
         </div>
       </div>
       {/* transaction rows */}

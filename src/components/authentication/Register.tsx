@@ -34,7 +34,7 @@ const Register = () => {
 
     if (response?.success) {
       toast.success(response?.message);
-      router.push("/login");
+      router.push("/signin");
     }
   };
 
