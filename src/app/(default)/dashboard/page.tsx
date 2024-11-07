@@ -7,7 +7,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { showModal } from "@/store/features/ui/uiSlice";
-import { useCheckBalanceMutation } from "@/store/features/transaction/transactionApi";
+import {
+  useCheckBalanceMutation,
+  useGetTransactionsHistoryMutation,
+} from "@/store/features/transaction/transactionApi";
 
 function Page() {
   const dispatch = useDispatch();
@@ -19,7 +22,9 @@ function Page() {
 
   //check balance
   const [balance, setBalance] = useState(0);
+  const [transaction, setTransaction] = useState([]);
   const [checkBalance] = useCheckBalanceMutation();
+  const [getTransactionsHistory] = useGetTransactionsHistoryMutation();
 
   const handleBalance = async () => {
     const token = localStorage.getItem("token");
@@ -27,12 +32,24 @@ function Page() {
     if (checkBalanceResult?.success) {
       setBalance(checkBalanceResult.result.balance);
     } else {
-      toast.error("Transaction failed");
+      toast.error("Balance data fetching failed");
+    }
+  };
+
+  const handleTransactionData = async () => {
+    const token = localStorage.getItem("token");
+    const checkTransaction = await getTransactionsHistory({ token }).unwrap();
+    if (checkTransaction?.success) {
+      setTransaction(checkTransaction.data);
+    } else {
+      toast.error("Transaction data fetching failed");
     }
   };
 
   useEffect(() => {
     handleBalance();
+    handleTransactionData();
+    // console.log(transaction);
   }, []);
 
   // const [showModal, setShowModal] = useState(true);
@@ -57,7 +74,7 @@ function Page() {
           <CardSection />
         </div>
         <div className="h-full xl:w-[117rem] bg-[#aacdcf]/30 backdrop-blur-[30px] ml-[-7rem] pl-[10rem]">
-          <TransactionSection balance={balance} />
+          <TransactionSection transactionData={transaction} balance={balance} />
         </div>
       </div>
     </>

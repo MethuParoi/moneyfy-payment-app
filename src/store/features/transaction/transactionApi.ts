@@ -16,13 +16,7 @@ const transactionApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["balance"],
     }),
-    getTransactionsHistory: builder.query({
-      query: (username) => ({
-        url: `/api/get-transactions/${username}`,
-        method: "GET",
-      }),
-      providesTags: ["balance"],
-    }),
+
     addMoney: builder.mutation({
       query: ({ amount }) => {
         const token = localStorage.getItem("token");
@@ -50,12 +44,25 @@ const transactionApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["balance"],
     }),
+    getTransactionsHistory: builder.mutation({
+      query: () => {
+        const token = localStorage.getItem("token");
+        return {
+          url: `/api/user-transactions`,
+          method: "GET",
+          headers: {
+            Authorization: token,
+          },
+        };
+      },
+      invalidatesTags: ["balance"],
+    }),
   }),
 });
 
 export const {
   useSendMoneyMutation,
-  useGetTransactionsHistoryQuery,
+  useGetTransactionsHistoryMutation,
   useAddMoneyMutation,
   useCheckBalanceMutation,
 } = transactionApi;
