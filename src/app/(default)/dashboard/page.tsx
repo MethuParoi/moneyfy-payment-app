@@ -15,14 +15,10 @@ import {
 function Page() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const user = localStorage.getItem("username");
-    toast.success(`Welcome, ${user}`);
-  }, []);
-
   //check balance
   const [balance, setBalance] = useState(0);
   const [transaction, setTransaction] = useState([]);
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [checkBalance] = useCheckBalanceMutation();
   const [getTransactionsHistory] = useGetTransactionsHistoryMutation();
 
@@ -47,10 +43,21 @@ function Page() {
   };
 
   useEffect(() => {
+    // if (!isInitialRender) {
+    //   return;
+    // }
+    // const user = localStorage.getItem("username");
+    // toast.success(`Welcome, ${user}`);
     handleBalance();
     handleTransactionData();
-    // console.log(transaction);
+    setIsInitialRender(false);
   }, []);
+
+  // useEffect(() => {
+  //   handleBalance();
+  //   handleTransactionData();
+  //   // console.log(transaction);
+  // }, []);
 
   // const [showModal, setShowModal] = useState(true);
   const setModal = useSelector((state) => state.ui.showModal);

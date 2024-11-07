@@ -23,15 +23,25 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["balance"],
     }),
-    // getAllUser: builder.query({
-    //   query: () => ({
-    //     url: "/users",
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["users"],
-    // }),
+    getAllUser: builder.mutation({
+      query: () => {
+        const token = localStorage.getItem("token");
+        return {
+          url: `/api/users`,
+          method: "GET",
+          headers: {
+            Authorization: token,
+          },
+        };
+      },
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetBalanceQuery } =
-  userApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetBalanceQuery,
+  useGetAllUserMutation,
+} = userApi;
