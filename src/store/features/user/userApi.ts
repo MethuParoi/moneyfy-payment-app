@@ -24,19 +24,26 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["balance"],
     }),
-    getAllUser: builder.mutation({
-      query: () => {
-        const token = localStorage.getItem("token");
-        return {
-          url: `/api/users`,
-          method: "GET",
-          headers: {
-            Authorization: token,
-          },
-        };
-      },
-      invalidatesTags: ["users"],
+    getAllUser: builder.query({
+      query: () => ({
+        url: `/api/users`,
+        method: "GET",
+      }),
+      providesTags: ["users"],
     }),
+    // getAllUser: builder.query({
+    //   query: () => {
+    //     const token = localStorage.getItem("token");
+    //     return {
+    //       url: `/api/users`,
+    //       method: "GET",
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     };
+    //   },
+    // invalidatesTags: ["users"],
+    // }),
     createConversation: builder.mutation({
       query: (conversationData) => {
         const token = localStorage.getItem("token");
@@ -103,7 +110,7 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGetBalanceQuery,
-  useGetAllUserMutation,
+  useGetAllUserQuery,
   useCreateConversationMutation,
   useCheckConversationMutation,
   useGetMessagesMutation,

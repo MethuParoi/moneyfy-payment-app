@@ -3,7 +3,7 @@
 import ChatBubble from "@/components/chat/ChatBubble";
 import UserList from "@/components/chat/UserList";
 import {
-  useGetAllUserMutation,
+  useGetAllUserQuery,
   useGetMessagesMutation,
   useSendMessagesMutation,
 } from "@/store/features/user/userApi";
@@ -17,14 +17,14 @@ function Page() {
   const [conversationId, setConversationId] = useState(null);
   const [receiver, setReceiver] = useState(null);
   const [userMessage, setUserMessage] = useState("");
-  const [getAllUser] = useGetAllUserMutation();
   const [sendMessages] = useSendMessagesMutation();
   const [getMessages] = useGetMessagesMutation();
   const userName = localStorage.getItem("username");
+  const { data: userData } = useGetAllUserQuery(undefined);
 
+  console.log("user", userData);
   const handleUser = async () => {
     const token = localStorage.getItem("token");
-    const checkUser = await getAllUser({ token }).unwrap();
     if (checkUser?.success) {
       setUser(checkUser.result);
     } else {
@@ -32,14 +32,14 @@ function Page() {
     }
   };
 
-  const handleAllMessages = async (conversationId) => {
-    const checkAllMessages = await getAllUser({ conversationId }).unwrap();
-    if (checkAllMessages?.success) {
-      setConversation(checkAllMessages.data.message);
-    } else {
-      toast.error("user message fetching failed");
-    }
-  };
+  //   const handleAllMessages = async (conversationId) => {
+  //     const checkAllMessages = await getAllUser({ conversationId }).unwrap();
+  //     if (checkAllMessages?.success) {
+  //       setConversation(checkAllMessages.data.message);
+  //     } else {
+  //       toast.error("user message fetching failed");
+  //     }
+  //   };
 
   const handleSendMessage = async () => {
     if (!userMessage.trim()) return;
@@ -70,7 +70,8 @@ function Page() {
 
   useEffect(() => {
     handleUser();
-    handleAllMessages(conversationId);
+    // handleAllMessages(conversationId);
+    // console.log("conversation:", conversation);
   }, []);
 
   useEffect(() => {
@@ -94,10 +95,11 @@ function Page() {
             <h1 className="text-[3rem] font-semibold text-gray-700">Users</h1>
             <p className="text-gray-600">Connect all your users</p>
           </div>
-          {user.map((user, index) => (
+          {userData?.result?.map((user, index) => (
             <UserList
               key={index}
               user={user}
+              conversation={conversation}
               setConversation={setConversation}
               setReceiver={() => setReceiver(user._id)} // Set receiver when selecting a user
             />

@@ -16,6 +16,7 @@ function UserList({
   user,
   setConversation,
   setReceiver,
+  conversation,
 }: {
   user: User;
   setConversation: any;
@@ -47,7 +48,7 @@ function UserList({
       setConversation([]);
       if (getUserConversation?.success) {
         setConversation(getUserConversation.data);
-        // console.log("Conversation:", conversation);
+        console.log("Conversation:", conversation);
       }
       //store user data in local storage
       //   localStorage.setItem("conversationId", checkUserConversation.result._id);

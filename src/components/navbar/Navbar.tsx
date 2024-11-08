@@ -22,7 +22,7 @@ function Navbar() {
       onClick: () => router.push("/dashboard"),
     },
     { icon: IoIosChatbubbles, onClick: () => router.push("/chat") },
-    { icon: MdAccountCircle, onClick: () => alert("Withdraw clicked") },
+    { icon: MdAccountCircle, onClick: () => router.push("/profile") },
     { icon: FaShop, onClick: () => alert("Withdraw clicked again") },
     { icon: FaUsers, onClick: () => alert("Transfer clicked again") },
     {
