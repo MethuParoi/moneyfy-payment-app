@@ -58,6 +58,29 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["messages"],
     }),
+
+    pinInfo: builder.query({
+      query: () => ({
+        url: "/api/pin-info",
+        method: "GET",
+      }),
+    }),
+    setPin: builder.mutation({
+      query: (data) => ({
+        url: "/api/set-pin",
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["pin"],
+    }),
+    updatePin: builder.mutation({
+      query: (data) => ({
+        url: "/api/update-pin",
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["pin"],
+    }),
   }),
 });
 
@@ -70,4 +93,7 @@ export const {
   useLazyCheckConversationQuery,
   useGetMessagesQuery,
   useCreateMessageMutation,
+  useSetPinMutation,
+  useUpdatePinMutation,
+  usePinInfoQuery,
 } = userApi;
