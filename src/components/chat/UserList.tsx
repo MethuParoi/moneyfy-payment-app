@@ -1,72 +1,67 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import { useChatContext } from "@/context/chatContext";
 import {
-  useCheckConversationMutation,
   useCreateConversationMutation,
-  useGetMessagesMutation,
+  useGetAllUserQuery,
+  useLazyCheckConversationQuery,
 } from "@/store/features/user/userApi";
-import React, { useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-}
+const UserList = () => {
+  const router = useRouter();
+  const { setChatReceiver } = useChatContext();
 
-function UserList({
-  user,
-  setConversation,
-  setReceiver,
-  conversation,
-}: {
-  user: User;
-  setConversation: any;
-  setReceiver: any;
-}) {
+  const { data: userData } = useGetAllUserQuery(undefined);
   const [createConversation] = useCreateConversationMutation();
-  const [checkConversation] = useCheckConversationMutation();
-  const [getMessages] = useGetMessagesMutation();
+  const [checkConversation] = useLazyCheckConversationQuery();
 
-  const handleConversation = async (conversationId: string) => {
-    // const token = localStorage.getItem("token");
-    const receiver = user._id;
-    const checkUserConversation = await checkConversation({
-      conversationId,
-    }).unwrap();
-    if (checkUserConversation.result === false) {
-      setConversation([]);
-      const createUserConversation = await createConversation({
-        receiver,
-      }).unwrap();
-      if (createUserConversation?.succeass) {
-        //  setConversation(checkUserConversation.result);
+  const handleStartConversation = async (
+    receiverId: string,
+    receiverName: string
+  ) => {
+    const ifConversationExists = await checkConversation(receiverId).unwrap();
+
+    if (ifConversationExists) {
+      if (ifConversationExists?.result) {
+        router.push(`/chat/${ifConversationExists?.result?._id}`);
+      } else {
+        const newConversation = await createConversation({
+          receiver: receiverId,
+        }).unwrap();
+        router.push(`/chat/${newConversation?.data?._id}`);
       }
-    } else if (checkUserConversation?.success) {
-      let conversationId = checkUserConversation.result._id;
-      const getUserConversation = await getMessages({
-        conversationId,
-      }).unwrap();
-      setConversation([]);
-      if (getUserConversation?.success) {
-        setConversation(getUserConversation.data);
-        console.log("Conversation:", conversation);
-      }
-      //store user data in local storage
-      //   localStorage.setItem("conversationId", checkUserConversation.result._id);
+
+      setChatReceiver({ name: receiverName, userId: receiverId });
     }
   };
+
   return (
-    <div
-      onClick={() => {
-        handleConversation(user._id);
-      }}
-      className="pl-[8rem] my-1 py-4 flex items-center gap-x-6  backdrop-blur-[30px] cursor-pointer hover:bg-[#dfeceb91]"
-    >
-      <div>
-        <FaUserCircle className="text-[4rem]" />
+    <div className="p-5 bg-blue-200 flex-1 rounded-tl-[50px] rounded-bl-[50px]">
+      <h2 className="text-5xl font-bold text-gray-800 mt-5 mb-14 text-center">
+        Users
+      </h2>
+      <div className="max-h-[70vh] overflow-y-scroll no-scrollbar">
+        {userData &&
+          userData?.result?.map((user: any) => {
+            const { firstName, lastName, _id } = user;
+            return (
+              <div
+                key={_id}
+                className="py-5 w-full bg-blue-100 rounded-[5px] shadow-sm overflow-hidden mb-4 text-center hover:shadow-lg cursor-pointer transition-all duration-300 ease-in-out"
+                onClick={() =>
+                  handleStartConversation(_id, `${firstName} ${lastName}`)
+                }
+              >
+                <h3 className="text-[16px] font-medium text-gray-700">
+                  {firstName} {lastName}
+                </h3>
+              </div>
+            );
+          })}
       </div>
-      <h2 className="text-3xl font-semibold">{`${user.firstName} ${user.lastName}`}</h2>
     </div>
   );
-}
+};
 
 export default UserList;
