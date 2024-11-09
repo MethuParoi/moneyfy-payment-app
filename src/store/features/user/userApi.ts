@@ -1,4 +1,3 @@
-import { use } from "react";
 import { baseApi } from "../../api/baseApi";
 
 const userApi = baseApi.injectEndpoints({
@@ -31,77 +30,33 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["users"],
     }),
-    // getAllUser: builder.query({
-    //   query: () => {
-    //     const token = localStorage.getItem("token");
-    //     return {
-    //       url: `/api/users`,
-    //       method: "GET",
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //     };
-    //   },
-    // invalidatesTags: ["users"],
-    // }),
     createConversation: builder.mutation({
-      query: (conversationData) => {
-        const token = localStorage.getItem("token");
-
-        return {
-          url: "/api/create-conversation",
-          method: "POST",
-          headers: {
-            Authorization: token,
-          },
-          body: conversationData,
-        };
-      },
+      query: (data) => ({
+        url: "/api/create-conversation",
+        method: "POST",
+        body: data,
+      }),
     }),
-
-    checkConversation: builder.mutation({
-      query: ({ conversationId }) => {
-        const token = localStorage.getItem("token");
-
-        return {
-          url: `/api/check-conversation/${conversationId}`,
-          method: "GET",
-          headers: {
-            Authorization: token,
-          },
-        };
-      },
+    checkConversation: builder.query({
+      query: (receiverId) => ({
+        url: `/api/check-conversation/${receiverId}`,
+        method: "GET",
+      }),
     }),
-    getMessages: builder.mutation({
-      query: ({ conversationId }) => {
-        const token = localStorage.getItem("token");
-
-        return {
-          url: `/api/messages/${conversationId}`,
-          method: "GET",
-          headers: {
-            Authorization: token,
-          },
-        };
-      },
+    getMessages: builder.query({
+      query: (conversationId) => ({
+        url: `/api/messages/${conversationId}`,
+        method: "GET",
+      }),
+      providesTags: ["messages"],
     }),
-    sendMessages: builder.mutation({
-      query: ({ conversationId, receiver, message }) => {
-        const token = localStorage.getItem("token");
-
-        return {
-          url: `/api/create-message`,
-          method: "POST",
-          headers: {
-            Authorization: token,
-          },
-          body: {
-            conversationId,
-            receiver,
-            message,
-          },
-        };
-      },
+    createMessage: builder.mutation({
+      query: (data) => ({
+        url: "/api/create-message",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["messages"],
     }),
   }),
 });
@@ -112,7 +67,7 @@ export const {
   useGetBalanceQuery,
   useGetAllUserQuery,
   useCreateConversationMutation,
-  useCheckConversationMutation,
-  useGetMessagesMutation,
-  useSendMessagesMutation,
+  useLazyCheckConversationQuery,
+  useGetMessagesQuery,
+  useCreateMessageMutation,
 } = userApi;

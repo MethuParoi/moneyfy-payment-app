@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://moneyfy-server.vercel.app/",
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers) => {
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -16,6 +16,6 @@ const baseQuery = fetchBaseQuery({
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery,
-  tagTypes: ["users"],
+  tagTypes: ["users", "messages", "balance"],
   endpoints: () => ({}),
 });
