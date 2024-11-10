@@ -1,16 +1,17 @@
 "use client";
 
-import CardSection from "@/components/dashboard/CardSection";
-import { Modal } from "@/components/dashboard/Modal";
-import TransactionSection from "@/components/dashboard/TransactionSection";
+import CardSection from "../../../components/dashboard/CardSection";
+import { Modal } from "../../../components/dashboard/Modal";
+import TransactionSection from "../../../components/dashboard/TransactionSection";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { showModal } from "@/store/features/ui/uiSlice";
+import { showModal } from "../../../store/features/ui/uiSlice";
 import {
   useCheckBalanceMutation,
   useGetTransactionsHistoryMutation,
-} from "@/store/features/transaction/transactionApi";
+} from "../../../store/features/transaction/transactionApi";
+import { useRouter } from "next/navigation";
 
 function Page() {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function Page() {
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [checkBalance] = useCheckBalanceMutation();
   const [getTransactionsHistory] = useGetTransactionsHistoryMutation();
+
+  const router = useRouter();
+  const token = localStorage.getItem("token");
 
   const handleBalance = async () => {
     const token = localStorage.getItem("token");
@@ -51,6 +55,9 @@ function Page() {
     handleBalance();
     handleTransactionData();
     setIsInitialRender(false);
+    if (!token) {
+      router.push("/signin");
+    }
   }, []);
 
   // useEffect(() => {
@@ -76,11 +83,12 @@ function Page() {
           handleBalance={handleBalance}
         />
       )}
-      <div className=" h-screen w-screen flex bg-[#3d7bee]">
-        <div className="h-full xl:w-[77rem] bg-[#dfeceb]/50 backdrop-blur-[30px] rounded-r-[5rem] ml-[-7rem] pl-[10rem] z-10 border-2 border-white/40 brightness-70">
+      <div className=" h-screen w-screen flex bg-[url('/sky-background.webp') bg-blue-400/70">
+        {/* <div className=""></div> */}
+        <div className="h-full xl:w-[77rem] bg-[#dfeceb]/30 backdrop-blur-[30px] rounded-r-[5rem] ml-[-7rem] pl-[10rem] z-10 border-2 border-white/40 brightness-70">
           <CardSection />
         </div>
-        <div className="h-full xl:w-[117rem] bg-[#aacdcf]/30 backdrop-blur-[30px] ml-[-7rem] pl-[10rem]">
+        <div className="h-full xl:w-[117rem] bg-[#dfeceb]/10  backdrop-blur-[30px] ml-[-7rem] pl-[10rem]">
           <TransactionSection transactionData={transaction} balance={balance} />
         </div>
       </div>

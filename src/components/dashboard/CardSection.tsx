@@ -7,6 +7,9 @@ import Users from "./Users";
 import { IoCopyOutline } from "react-icons/io5";
 
 const accountNumber = localStorage.getItem("accountNumber");
+// const name = localStorage.getItem("username");
+
+const name = localStorage.getItem("fullname");
 
 const smallCardPropsArray = [
   { label: "Add Money", icon: "BiMoneyWithdraw", color: "#f67a3b" },
@@ -23,7 +26,10 @@ function CardSection() {
       </div>
       <div className="my-[3rem] relative">
         <Image height={400} width={400} src={Card} alt="" />
-        <h2 className="absolute bottom-[4.8rem] left-[10rem] text-[2.2rem] tracking-widest">
+        <h2 className="absolute bottom-[4.8rem] left-[10rem] text-[2rem] tracking-widest">
+          {name}
+        </h2>
+        <h2 className="absolute bottom-[2.2rem] left-[10rem] text-[2.2rem] tracking-widest">
           {accountNumber}
         </h2>
       </div>

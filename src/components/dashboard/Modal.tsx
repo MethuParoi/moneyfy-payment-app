@@ -9,6 +9,8 @@ import {
   useSendMoneyMutation,
 } from "../../store/features/transaction/transactionApi";
 import { toast } from "react-toastify";
+import { takeUserPhotoToggle } from "../../store/features/user/userSlice";
+import AuthModal from "../ui/AuthModal/AuthModal";
 // import { toast } from "sonner";
 // import AuthModal from "../../../components/ui/AuthModal/AuthModal";
 // import { takeUserPhotoToggle } from "../../../redux/features/user/userSlice";
@@ -32,6 +34,7 @@ export const Modal = ({ modalHandler, heading, logo, handleBalance }) => {
   const [sendMoney] = useSendMoneyMutation();
   const [addMoney] = useAddMoneyMutation();
   const dispatch = useDispatch();
+  const photoUrl = localStorage.getItem("photoUrl");
 
   const receiverNotNeededTransactions = ["Add Money", "Request Loan"];
 
@@ -75,15 +78,19 @@ export const Modal = ({ modalHandler, heading, logo, handleBalance }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //   dispatch(takeUserPhotoToggle());
-    await handleTransaction();
+    dispatch(takeUserPhotoToggle());
+    // await handleTransaction();
   };
 
   const IconComponent = iconMapping[logo];
 
   return (
     <>
-      {/* <AuthModal authFunction={handleTransaction} /> */}
+      <AuthModal
+        authFunction={handleTransaction}
+        env="logging"
+        photoUrl={photoUrl}
+      />
       <div className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex flex-col justify-center items-center z-50">
         <div className=" gap-3 flex flex-col">
           <button onClick={modalHandler} className="place-self-end">

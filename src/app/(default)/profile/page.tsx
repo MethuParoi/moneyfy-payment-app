@@ -3,17 +3,17 @@
 import React from "react";
 // import "./Profile.css";
 import ProfileImageSection from "../../../components/profile/ProfileImageSection";
-import ProfileModal from "../../../components/profile//ProfileModal";
+import ProfileModal from "../../../components/profile/ProfileModal";
 import { CgProfile } from "react-icons/cg";
-import ProfileDesc from "../../../components/profile//ProfileDesc";
+import ProfileDesc from "../../../components/profile/ProfileDesc";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { img } from "../../../images/dashboard/user.png";
-import UpdateUserPin from "@/components/profile/UpdateUserPin";
-import SetUserPin from "@/components/profile/SetUserPin";
-import PinModal from "@/components/profile/PinModal";
-import { usePinInfoQuery } from "@/store/features/user/userApi";
+import UpdateUserPin from "../../../components/profile/UpdateUserPin";
+import SetUserPin from "../../../components/profile/SetUserPin";
+import PinModal from "../../../components/profile/PinModal";
+import { usePinInfoQuery } from "../../../store/features/user/userApi";
 import { toast } from "react-toastify";
 
 const Profile = () => {
@@ -24,8 +24,11 @@ const Profile = () => {
   const { data: pinInfo } = usePinInfoQuery();
 
   const accountNumber = localStorage.getItem("accountNumber");
-  const fullName = localStorage.getItem("username");
+  const fullName = localStorage.getItem("fullname");
   const email = localStorage.getItem("email");
+  const photoUrl = localStorage.getItem("photoUrl");
+
+  console.log("photoUrl", photoUrl);
 
   const handlePinInfo = () => {
     if (pinInfo?.result?.pinExist) {
@@ -40,7 +43,7 @@ const Profile = () => {
 
   const router = useRouter();
   return (
-    <div className="min-h-screen w-full ml-[-5rem] pl-[7rem] pr-[2rem] text-gray-700 bg-[#5c84ce]">
+    <div className="min-h-screen w-full ml-[-5rem] pl-[7rem] pr-[2rem] text-gray-700 bg-[url('/sky-background.webp') bg-blue-400/70">
       <div className="flex items-center justify-between pt-10 px-5">
         <div
           className="cursor-pointer hover:text-gray-600"
@@ -60,10 +63,13 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-3 border-transparent mt-10 px-8 pt-14 pb-20  rounded-[4rem] shadow-xl h-[50rem] bg-[#dfeceb]/50 backdrop-blur-[30px]">
+      <div className="grid grid-cols-3 border-transparent mt-10 px-8 pt-14 pb-20  rounded-[4rem] shadow-xl h-[50rem] bg-[#dfeceb]/30 backdrop-blur-[30px]">
         <div className="flex items-center justify-center">
           <div className="">
-            <ProfileImageSection profileImage={img} handleEdit={handleEdit} />
+            <ProfileImageSection
+              profileImage={photoUrl}
+              handleEdit={handleEdit}
+            />
           </div>
         </div>
 

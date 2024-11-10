@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useChatContext } from "@/context/chatContext";
+import { useChatContext } from "../../context/chatContext";
 import {
   useCreateConversationMutation,
   useGetAllUserQuery,
   useLazyCheckConversationQuery,
-} from "@/store/features/user/userApi";
+} from "../../store/features/user/userApi";
 import { useRouter } from "next/navigation";
 
 const UserList = () => {

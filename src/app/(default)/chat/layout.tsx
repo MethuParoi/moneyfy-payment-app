@@ -1,5 +1,5 @@
-import UserList from "@/components/chat/UserList";
-import { ChatProvider } from "@/context/chatContext";
+import UserList from "../../../components/chat/UserList";
+import { ChatProvider } from "../../../context/chatContext";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (

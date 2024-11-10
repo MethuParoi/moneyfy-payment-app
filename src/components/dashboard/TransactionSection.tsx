@@ -6,47 +6,8 @@ import TransactionRows from "./TransactionRows";
 
 import { Chart } from "./Chart";
 import { BiDollar } from "react-icons/bi";
-import { useCheckBalanceMutation } from "@/store/features/transaction/transactionApi";
+import { useCheckBalanceMutation } from "../../store/features/transaction/transactionApi";
 import { toast } from "react-toastify";
-
-// const transactionRows = [
-//   {
-//     name: "John Doe",
-//     amount: "$100",
-//     date: "12/12/2021",
-//     status: "Pending",
-//   },
-//   {
-//     name: "Jane Doe",
-//     amount: "$200",
-//     date: "12/12/2021",
-//     status: "Completed",
-//   },
-//   {
-//     name: "John Doe",
-//     amount: "$100",
-//     date: "12/12/2021",
-//     status: "Pending",
-//   },
-//   {
-//     name: "Jane Doe",
-//     amount: "$200",
-//     date: "12/12/2021",
-//     status: "Completed",
-//   },
-//   {
-//     name: "John Doe",
-//     amount: "$100",
-//     date: "12/12/2021",
-//     status: "Pending",
-//   },
-//   {
-//     name: "Jane Doe",
-//     amount: "$200",
-//     date: "12/12/2021",
-//     status: "Completed",
-//   },
-// ];
 
 function TransactionSection({ balance, transactionData }) {
   // const [balance, setBalance] = useState(0);
@@ -88,7 +49,7 @@ function TransactionSection({ balance, transactionData }) {
 
       <div className="flex flex-col justify-between">
         {/* transaction rows */}
-        <div className="h-[45rem] overflow-y-auto">
+        <div className="h-[40rem] overflow-y-hidden">
           {transactionData.map((transaction, index) => (
             <TransactionRows
               key={index}
@@ -100,8 +61,9 @@ function TransactionSection({ balance, transactionData }) {
           ))}
         </div>
         {/* charts */}
-        <div className="grid grid-cols-2 w-[90rem] h-[35rem] border border-white/10 rounded-[12px] backdrop-blur-[20px] bg-white/10 mb-[1rem]">
+        <div className="grid grid-cols-2 w-[90rem] h-[35rem] border border-white/10 rounded-[12px] backdrop-blur-[20px] bg-white/10 my-[1rem]">
           <Chart />
+          {/* <Chart transactionData={transactionData} /> */}
 
           <div className="grid grid-cols-2  mt-[8rem]">
             <div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { setIcon, setLabel, showModal } from "@/store/features/ui/uiSlice";
+import { setIcon, setLabel, showModal } from "../../store/features/ui/uiSlice";
 import React from "react";
 import * as BiIcons from "react-icons/bi";
 import * as GiIcons from "react-icons/gi";
@@ -41,5 +41,3 @@ function SmallCard({ label, icon, color }: SmallCardProps) {
 }
 
 export default SmallCard;
-
-

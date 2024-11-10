@@ -8,7 +8,9 @@ const ProfileImageSection = ({ profileImage, handleEdit }) => {
         <Img
           src={profileImage}
           alt="profile"
-          className="rounded-full w-[25rem] h-[25rem] border-4 border-blue-400 shadow-lg p-5"
+          className="rounded-full w-[25rem] h-[25rem] border-4 border-blue-300 shadow-lg "
+          height={400}
+          width={400}
         />
       </div>
 

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useChatContext } from "@/context/chatContext";
+import { useChatContext } from "../../../../context/chatContext";
 import {
   useCreateMessageMutation,
   useGetMessagesQuery,
-} from "@/store/features/user/userApi";
+} from "../../../../store/features/user/userApi";
 import { useParams } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { FaArrowRight, FaUser } from "react-icons/fa6";

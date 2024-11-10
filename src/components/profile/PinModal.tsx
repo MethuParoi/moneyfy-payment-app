@@ -4,7 +4,7 @@ import {
   usePinInfoQuery,
   useSetPinMutation,
   useUpdatePinMutation,
-} from "@/store/features/user/userApi";
+} from "../../store/features/user/userApi";
 import { toast } from "react-toastify";
 
 const PinModal = ({ handleEdit, type }) => {

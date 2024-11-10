@@ -3,6 +3,7 @@
 import React from "react";
 import {
   BiCreditCard,
+  BiLogOut,
   BiSolidFoodMenu,
   BiSolidHomeCircle,
 } from "react-icons/bi";
@@ -23,15 +24,17 @@ function Navbar() {
     },
     { icon: IoIosChatbubbles, onClick: () => router.push("/chat") },
     { icon: MdAccountCircle, onClick: () => router.push("/profile") },
-    { icon: FaShop, onClick: () => alert("Withdraw clicked again") },
-    { icon: FaUsers, onClick: () => alert("Transfer clicked again") },
-    {
-      icon: BiSolidFoodMenu,
-      onClick: () => alert("Credit Card clicked again"),
-    },
+
     {
       icon: AiTwotoneSetting,
-      onClick: () => alert("Credit Card clicked again"),
+      onClick: () => console.log("Credit Card clicked again"),
+    },
+    {
+      icon: BiLogOut,
+      onClick: () => {
+        localStorage.clear();
+        router.push("/signin");
+      },
     },
   ];
 
