@@ -50,6 +50,7 @@ export const Modal = ({ modalHandler, heading, logo, handleBalance }) => {
         // transactionMadeBy: username,
       };
       const addMoneyResult = await addMoney(transObj).unwrap();
+      console.log("add money:", addMoneyResult);
       if (addMoneyResult?.success) {
         toast.success(addMoneyResult.message);
         handleBalance();
