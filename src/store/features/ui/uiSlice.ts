@@ -16,10 +16,10 @@ const uiSlice = createSlice({
       state.showModal = action.payload;
     },
     showInfoModal: (state, action) => {
-      state.showModal = action.payload;
+      state.showInfoModal = action.payload;
     },
     showInfo: (state, action) => {
-      state.showModal = action.payload;
+      state.showInfo = action.payload;
     },
     setLabel: (state, action) => {
       state.label = action.payload;
@@ -34,3 +34,5 @@ export const { showModal, showInfoModal, showInfo, setLabel, setIcon } =
   uiSlice.actions;
 
 export default uiSlice.reducer;
+
+

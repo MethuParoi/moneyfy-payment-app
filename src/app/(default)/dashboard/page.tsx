@@ -85,7 +85,7 @@ function Page() {
       )}
       <div className=" h-screen w-screen flex bg-[url('/sky-background.webp') bg-blue-400/70">
         {/* <div className=""></div> */}
-        <div className="h-full xl:w-[77rem] bg-[#dfeceb]/30 backdrop-blur-[30px] rounded-r-[5rem] ml-[-7rem] pl-[10rem] z-10 border-2 border-white/40 brightness-70">
+        <div className="h-full xl:w-[77rem] bg-[#dfeceb]/20 backdrop-blur-[30px] rounded-r-[5rem] ml-[-7rem] pl-[10rem] z-10 border-2 border-white/40 brightness-70">
           <CardSection />
         </div>
         <div className="h-full xl:w-[117rem] bg-[#dfeceb]/10  backdrop-blur-[30px] ml-[-7rem] pl-[10rem]">

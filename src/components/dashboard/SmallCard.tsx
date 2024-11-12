@@ -22,8 +22,8 @@ function SmallCard({ label, icon, color }: SmallCardProps) {
 
   return (
     <div
-      className="w-[15rem] h-[12rem] rounded-[3rem] shadow-lg flex justify-center items-center cursor-pointer"
-      style={{ backgroundColor: color }}
+      className="w-[15rem] h-[12rem] rounded-[3rem] shadow-lg flex justify-center items-center cursor-pointer backdrop-blur"
+      style={{ backgroundColor: color, opacity: 0.8 }}
       onClick={() => {
         dispatch(showModal(true));
         dispatch(setLabel(label));

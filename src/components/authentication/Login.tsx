@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginMutation } from "../../store/features/user/userApi";
 import Loading from "../ui/Loader/Loader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setUser,
   takeUserPhotoToggle,
 } from "../../store/features/user/userSlice";
 import AuthModal from "../ui/AuthModal/AuthModal";
+import { showInfo, showInfoModal } from "@/store/features/ui/uiSlice";
+import { InfoModal } from "../authentication/InfoModal";
 
 const Login = () => {
   const router = useRouter();
@@ -19,7 +21,6 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const location = router.asPath;
-  // const { from } = { from: { pathname: "/" } };
   const [tempUser, setTempUser] = useState(null);
 
   const handleUser = async () => {
@@ -38,14 +39,10 @@ const Login = () => {
 
     const result = await login(loginData).unwrap();
     if (result?.success) {
-      //temporarily commented out for develop without ml model
       setTempUser(result.result);
       dispatch(takeUserPhotoToggle());
 
       document.cookie = `token=${result.result.token}; path=/;`;
-      // router.push("/dashboard");
-
-      //store user data in local storage
 
       localStorage.setItem("token", result.result.token);
       localStorage.setItem("photoUrl", result.result.userData.photoUrl);
@@ -59,8 +56,12 @@ const Login = () => {
     }
   };
 
+  const setModal = useSelector((state) => state.ui.showInfoModal);
+  console.log("setModal:", setModal);
+
   return (
     <>
+      {setModal && <InfoModal />}
       {tempUser && (
         <AuthModal
           authFunction={handleUser}
@@ -143,3 +144,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -10,24 +10,6 @@ import { useCheckBalanceMutation } from "../../store/features/transaction/transa
 import { toast } from "react-toastify";
 
 function TransactionSection({ balance, transactionData }) {
-  // const [balance, setBalance] = useState(0);
-  // const [checkBalance] = useCheckBalanceMutation();
-
-  // const handleBalance = async () => {
-  //   const token = localStorage.getItem("token");
-  //   const checkBalanceResult = await checkBalance({ token }).unwrap();
-  //   if (checkBalanceResult?.success) {
-  //     setBalance(checkBalanceResult.result.balance);
-  //     toast.success(checkBalanceResult.message);
-  //   } else {
-  //     toast.error("Transaction failed");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handleBalance();
-  // }, []);
-
   return (
     <div className="ml-[2rem]">
       <div className="flex items-center justify-between  mr-[4rem] mt-[4rem]">
@@ -50,15 +32,18 @@ function TransactionSection({ balance, transactionData }) {
       <div className="flex flex-col justify-between">
         {/* transaction rows */}
         <div className="h-[40rem] overflow-y-hidden">
-          {transactionData.map((transaction, index) => (
-            <TransactionRows
-              key={index}
-              transactionType={transaction.transactionType}
-              amount={transaction.amount}
-              date={transaction.createdAt}
-              status={"Completed"}
-            />
-          ))}
+          {transactionData
+            .slice()
+            .reverse()
+            .map((transaction, index) => (
+              <TransactionRows
+                key={index}
+                transactionType={transaction.transactionType}
+                amount={transaction.amount}
+                date={transaction.createdAt}
+                status={"Completed"}
+              />
+            ))}
         </div>
         {/* charts */}
         <div className="grid grid-cols-2 w-[90rem] h-[35rem] border border-white/10 rounded-[12px] backdrop-blur-[20px] bg-white/10 my-[1rem]">
